@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from patients.views import list_patients, create_patient
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/patients/', list_patients), # Endpoint
+    path('api/patients/create', create_patient) #Endpoint para POST
 ]
