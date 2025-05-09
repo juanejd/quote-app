@@ -1,0 +1,9 @@
+{
+  "nombre": "Juan",
+  "apellido": "Jimenez",
+  "hobbies": ["videojuegos", "python", "dataScience"],
+  "contacto": {
+    "email": "hola@correo.com",
+    "redes": "@juanejd"
+  }
+}
