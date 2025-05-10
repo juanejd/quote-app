@@ -1,11 +1,11 @@
-from .serializers import PatientSerializer
-from .models import Patient
+from .serializers import PatientSerializer, InsuranceSerializer, MedicalRecordSerializer
+from .models import Patient, Insurance, MedicalRecord
 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    ListAPIView,
+    CreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 
 # GET /api/patients => Listar
 # POST /api/patients => Crear
@@ -13,58 +13,41 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDe
 # PUT /api/patients/<pk> => Modificacion
 # DELETE /api/patients/<pk> => Borrar
 
+
 # Vista basada en clases genericas, ListAPIView para el get y CreateAPIView para el post
 class ListPatientsView(ListAPIView, CreateAPIView):
     # parametros a usar en los metodos GET y POST
-    allowed_methods = ['GET', 'POST'] # Metodos permitidos
-    serializer_class = PatientSerializer #Serializer a utilizar
-    queryset = Patient.objects.all() #Query que se envia a la base de datos
+    allowed_methods = ["GET", "POST"]  # Metodos permitidos
+    serializer_class = PatientSerializer  # Serializer a utilizar
+    queryset = Patient.objects.all()  # Query que se envia a la base de datos
 
 
 # Vista basada en clase genericas, RetrieveAPIView get cada pk, UpdateAPIView para el put y   DestroyAPIView para el delete
 class DetailPatientView(RetrieveUpdateDestroyAPIView):
-    allowed_methods = ['GET', 'PUT', 'DELETE']
+    allowed_methods = ["GET", "PUT", "DELETE"]
     serializer_class = PatientSerializer
     queryset = Patient.objects.all()
 
 
-# Decorador para que django rest sea compatible con la vista
-# @api_view(['GET', 'POST']) #solo es compatible con el get para no usar esta misma vista en otra url
-# def list_patients(request):
-#     if request.method == 'GET':
-#       patients = Patient.objects.all()
-#       serializer = PatientSerializer(patients, many = True)
-#       return Response(serializer.data)
-    
-#     if request.method == 'POST':
-#         serializer = PatientSerializer(data=request.data) # Validar informacion digitada por el usuario
-#         serializer.is_valid(raise_exception=True) # con raise exception mostrarmos el error generado en formato json en caso de que la data haya sido ingresada incorrectamente
-#         serializer.save() # Guardamos
-#         return Response(status=status.HTTP_201_CREATED) # Mostramos que se creo un nuevo paciente
+class ListInsuranceView(ListAPIView, CreateAPIView):
+    allowed_methods = ["GET", "POST"]
+    serializer_class = InsuranceSerializer
+    queryset = Insurance.objects.all()
 
 
+class DetailInsuranceView(RetrieveUpdateDestroyAPIView):
+    allowed_methods = ["GET", "PUT", "DELETE"]
+    serializer_class = InsuranceSerializer
+    queryset = Insurance.objects.all()
 
-# Modificando datos de un paciente especifico
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def detail_patient(request, pk):
-#     # Creamos un try-except en caso de que no exista el usuario solicitado
-#     try:
-#         patient = Patient.objects.get(id=pk) # Query para acceder a la informacion de 1 paciente con su id
-#     except Patient.DoesNotExist:
-#       # En caso de que no exista Lanzamos un error 404 not_found
-#       return Response(status=status.HTTP_404_NOT_FOUND)
-    
-#     if request.method == 'GET':
-#         serializer = PatientSerializer(patient) # Si existe el usuario, usamos la data de ese paciente dentro del serializer
-#         return Response(serializer.data) # retornar la data en formato json
-    
-#     if request.method == 'PUT':
-#       serializer = PatientSerializer(patient, data=request.data)
-#       if serializer.is_valid(raise_exception=True):
-#           serializer.save()
-#           return Response(serializer.data, status=status.HTTP_201_CREATED)
-#       return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-#     if request.method == 'DELETE':
-#         patient.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ListMedicalRecordView(ListAPIView, CreateAPIView):
+    allowed_methods = ["GET", "POST"]
+    serializer_class = MedicalRecordSerializer
+    queryset = MedicalRecord.objects.all()
+
+
+class DetailMedicalRecordView(RetrieveUpdateDestroyAPIView):
+    allowed_methods = ["GET", "PUT", "DELETE"]
+    serializer_class = MedicalRecordSerializer
+    queryset = MedicalRecord.objects.all()

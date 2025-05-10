@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Tabla doctor
 class Doctor(models.Model):
     first_name = models.CharField(max_length=100)
@@ -10,13 +11,17 @@ class Doctor(models.Model):
     address = models.TextField()
     biography = models.TextField()
 
+
 # Tabla departamento
 class Department(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
 
+
 # Tabla disponibilidad del doctor
 class DoctorAvailability(models.Model):
-    doctor = models.ForeignKey(Doctor, related_name= 'medical_notes', on_delete=models.CASCADE)
+    doctor = models.ForeignKey(
+        Doctor, related_name="medical_notes", on_delete=models.CASCADE
+    )
     note = models.TextField()
     date = models.DateField()
