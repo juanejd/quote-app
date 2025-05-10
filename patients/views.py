@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 
 # GET /api/patients => Listar
 # POST /api/patients => Crear
@@ -21,8 +21,8 @@ class ListPatientsView(ListAPIView, CreateAPIView):
     queryset = Patient.objects.all() #Query que se envia a la base de datos
 
 
-# vista basada en clase genericoas, RetrieveAPIView get cada pk, UpdateAPIView para el put y   DestroyAPIView para el delete
-class DetailPatientView(RetrieveAPIView, UpdateAPIView, DestroyAPIView):
+# Vista basada en clase genericas, RetrieveAPIView get cada pk, UpdateAPIView para el put y   DestroyAPIView para el delete
+class DetailPatientView(RetrieveUpdateDestroyAPIView):
     allowed_methods = ['GET', 'PUT', 'DELETE']
     serializer_class = PatientSerializer
     queryset = Patient.objects.all()
