@@ -8,11 +8,14 @@ from .views import (
     DetailDoctorAvailabilityView,
 )
 
-urlpatterns = [
-    path("doctors/", ListDoctorView.as_view()),
-    path("doctors/<int:pk>/", DetailDoctorView.as_view()),
-    path("departments/", ListDepartmentView.as_view()),
-    path("departments/<int:id>/", DetailDepartmentView.as_view()),
-    path("doctoravailabilities/", ListDoctorAvailabilityView.as_view()),
-    path("doctoravailabilities/<int:id>/", DetailDoctorAvailabilityView.as_view()),
-]
+from rest_framework.routers import DefaultRouter
+from .viewsets import DoctorViewSet, DepartmentViewSet, DoctorAvailabilityViewSet
+
+# Nos permite agregar las viewsets
+router = DefaultRouter()
+# registrar viewsets
+router.register("doctors", DoctorViewSet)
+router.register("department", DepartmentViewSet)
+router.register("doctor_availabilities", DoctorAvailabilityViewSet)
+
+urlpatterns = router.urls

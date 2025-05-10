@@ -1,16 +1,13 @@
 from django.urls import path
 
-from .views import (
-    ListAppointmentView,
-    DetailAppointmentView,
-    ListMedicalNoteView,
-    DetailMedicalNoteView,
-)
+from rest_framework.routers import DefaultRouter
+from .viewsets import AppointmentViewSet, MedicalNoteViewSet
 
+# Instanciamos objeto
+router = DefaultRouter()
 
-urlpatterns = [
-    path("appointments/", ListAppointmentView.as_view()),
-    path("appointments/<int:id>/", DetailAppointmentView.as_view()),
-    path("medicalnotes/", ListMedicalNoteView.as_view()),
-    path("medicalnotes/<int:id>/", DetailMedicalNoteView.as_view()),
-]
+# Registrar URLS
+router.register("appointments", AppointmentViewSet)
+router.register("medical_notes", MedicalNoteViewSet)
+
+urlpatterns = router.urls
