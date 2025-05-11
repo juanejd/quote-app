@@ -10,6 +10,6 @@ router = DefaultRouter()
 # Registrar URLS
 router.register("patients", PatientViewSet)
 router.register("insurances", InsuranceViewSet)
-router.register("medical_records", MedicalRecordViewSet)
+router.register("medical-records", MedicalRecordViewSet)
 
 urlpatterns = router.urls

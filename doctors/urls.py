@@ -16,6 +16,6 @@ router = DefaultRouter()
 # registrar viewsets
 router.register("doctors", DoctorViewSet)
 router.register("department", DepartmentViewSet)
-router.register("doctor_availabilities", DoctorAvailabilityViewSet)
+router.register("doctor-availabilities", DoctorAvailabilityViewSet)
 
 urlpatterns = router.urls
