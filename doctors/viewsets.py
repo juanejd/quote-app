@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .serializers import (
     DoctorSerializer,
@@ -8,12 +9,17 @@ from .serializers import (
     DoctorAvailabilitySerializer,
 )
 from .models import Doctor, Department, DoctorAvailability
+from .permissions import IsDoctor
 
 
 # Generamos URL de doctor (crear,modificar,listar y actualizar)
 class DoctorViewSet(viewsets.ModelViewSet):
     serializer_class = DoctorSerializer
     queryset = Doctor.objects.all()
+    permission_classes = [
+        IsAuthenticatedOrReadOnly,
+        IsDoctor,
+    ]  # todos los endpoints del viewset funcionan solo si esta logueado
 
     """
     @action es un decorador de DRF que permite crear endpoints personalizados
