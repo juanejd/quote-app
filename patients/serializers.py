@@ -2,12 +2,26 @@ from rest_framework import serializers
 from datetime import date
 
 from .models import Patient, Insurance, MedicalRecord
+from bookings.serializers import AppointmentSerializer
 
 
 class PatientSerializer(serializers.ModelSerializer):
+
+    appointments = AppointmentSerializer(many=True, read_only=True)
+
     class Meta:
         model = Patient
-        fields = "__all__"
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "date_of_birth",
+            "contact_number",
+            "email",
+            "address",
+            "medical_history",
+            "appointments",
+        ]
 
     def validate_date_of_birth(self, value):
         """
