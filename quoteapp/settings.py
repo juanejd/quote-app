@@ -134,6 +134,11 @@ REST_FRAMEWORK = {
         # sistema de autenticacion de django igual al admin, agregando una cookie por cada request e identificar y autorizar para realizar un cambio
         "rest_framework.authentication.SessionAuthentication",
     ),
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {"anon": "5/minute", "user": "1000/minute"},
 }
 
 SPECTACULAR_SETTINGS = {
